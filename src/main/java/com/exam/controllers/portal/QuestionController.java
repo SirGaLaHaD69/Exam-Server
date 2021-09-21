@@ -12,6 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/question")
 @CrossOrigin
@@ -54,5 +57,23 @@ public class QuestionController {
             return  ResponseEntity.ok("Question Deleted Successfully");
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Question Not Found!");
+    }
+    @PostMapping("/eval")
+    public ResponseEntity<?> evalQuiz(@RequestBody List<Question> questions){
+        int nosAttempted=0,marksScored=0,nosCorrect=0;
+        int noOfQuestions = questions.get(0).getQuiz().getNoOfQuestions();
+        int maxMarks = questions.get(0).getQuiz().getMaxMarks();
+        int mark = maxMarks/noOfQuestions;
+        for( Question question : questions){
+            if(question.getUserAns()!=null){
+                nosAttempted++;
+                if(question.getUserAns().trim().equals(question.getAns().trim())){
+                    nosCorrect++;
+                    marksScored+=mark;
+                }
+            }
+        }
+        Map<String, Integer> response = Map.of("nosCorrect", nosCorrect,"nosAttempted",nosAttempted,"marksScored",marksScored);
+        return ResponseEntity.ok(response);
     }
 }

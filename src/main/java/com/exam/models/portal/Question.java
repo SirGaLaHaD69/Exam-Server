@@ -1,6 +1,7 @@
 package com.exam.models.portal;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,6 +36,9 @@ public class Question {
 
     @Column(length = 512)
     private String ans;
+
+    @Transient
+    private String userAns;
 
 
     @ManyToOne
