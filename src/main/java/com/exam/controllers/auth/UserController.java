@@ -3,8 +3,10 @@ package com.exam.controllers.auth;
 
 import com.exam.models.auth.Role;
 import com.exam.models.auth.User;
+import com.exam.models.portal.Student;
 import com.exam.repos.auth.RoleRepository;
 import com.exam.services.auth.UserService;
+import com.exam.services.portal.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,8 @@ public class UserController {
     UserService userService;
     @Autowired
     RoleRepository roleRepository;
+    @Autowired
+    StudentService studentService;
     @PostMapping("/")
     public ResponseEntity<?> createUser(@RequestBody User user) {
         Optional<Role> byId = roleRepository.findById(14L);
@@ -32,6 +36,9 @@ public class UserController {
         roles.add(guestRole);
         User userFetched = this.userService.createUser(user,roles);
         if(userFetched!=null){
+            Student student = new Student();
+            student.setUserId(userFetched.getId());
+            studentService.createStudent(student);
             return ResponseEntity.status(HttpStatus.OK).body(userFetched);
         }
         return ResponseEntity.badRequest().body("User Already Exists!");

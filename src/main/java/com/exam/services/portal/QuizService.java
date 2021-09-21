@@ -2,6 +2,7 @@ package com.exam.services.portal;
 
 
 import com.exam.models.portal.Quiz;
+import com.exam.models.portal.StudentScore;
 import com.exam.models.portal.Subject;
 import com.exam.repos.portal.QuizRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,4 +43,7 @@ public class QuizService {
         return false;
     }
 
+    public Set<StudentScore> getResults(Quiz quiz) {
+        return quiz.getResults();
+    }
 }
