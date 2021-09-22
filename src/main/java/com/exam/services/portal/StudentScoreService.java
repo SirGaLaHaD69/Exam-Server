@@ -30,4 +30,7 @@ public class StudentScoreService {
         studentScore.setMarksScored(marksScored);
         return studentScoreRepo.save(studentScore);
     }
+    public  StudentScore getResult(Student student,Quiz quiz){
+        return studentScoreRepo.findByStudentAndQuiz(student, quiz);
+    }
 }

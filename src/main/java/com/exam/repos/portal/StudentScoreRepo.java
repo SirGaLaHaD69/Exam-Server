@@ -11,4 +11,5 @@ import java.util.List;
 public  interface StudentScoreRepo extends JpaRepository<StudentScore,StudentScoreId>{
     List<StudentScore> findAllByQuiz(Quiz quiz);
     List<StudentScore> findAllByStudent(Student student);
+    StudentScore findByStudentAndQuiz(Student student,Quiz quiz);
 }
