@@ -27,6 +27,12 @@ public class UserController {
     RoleRepository roleRepository;
     @Autowired
     StudentService studentService;
+
+    @GetMapping("/test")
+    public String test(){
+        return "APIs working";
+    }
+
     @PostMapping("/")
     public ResponseEntity<?> createUser(@RequestBody User user) {
         Optional<Role> byId = roleRepository.findById(14L);
